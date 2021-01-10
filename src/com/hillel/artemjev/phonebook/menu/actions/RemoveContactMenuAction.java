@@ -36,7 +36,7 @@ public class RemoveContactMenuAction implements MenuAction {
             return;
         }
 
-        index--;
+        --index;
         String strRemovedContact = contactsService.getAll().get(index).toString();
         contactsService.remove(index);
         System.out.println("Контакт [" + strRemovedContact + "] удален");

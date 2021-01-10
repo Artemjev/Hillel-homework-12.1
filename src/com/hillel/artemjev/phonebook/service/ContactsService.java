@@ -1,17 +1,19 @@
 package com.hillel.artemjev.phonebook.service;
 
 
-import com.hillel.artemjev.phonebook.contacts.ContactsList;
+import com.hillel.artemjev.phonebook.contacts.Contact;
+
+import java.util.List;
 
 public interface ContactsService {
 
-    ContactsList getAll();
+    List<Contact> getAll();
 
     void remove(int index);
 
     void add(String name, String phone);
 
-    ContactsList searchByPhonePart(String phoneToSearch);
+    List<Contact> searchByPhonePart(String phoneToSearch);
 
-    ContactsList searchByNameBeginning(String nameToSearch);
+    List<Contact> searchByNameBeginning(String nameToSearch);
 }

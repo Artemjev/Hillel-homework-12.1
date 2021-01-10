@@ -1,9 +1,10 @@
 package com.hillel.artemjev.phonebook.menu.actions;
 
-import com.hillel.artemjev.phonebook.contacts.ContactsList;
+import com.hillel.artemjev.phonebook.contacts.Contact;
 import com.hillel.artemjev.phonebook.menu.MenuAction;
 import com.hillel.artemjev.phonebook.service.ContactsService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class SearchByPhonePartMenuAction implements MenuAction {
@@ -36,20 +37,14 @@ public class SearchByPhonePartMenuAction implements MenuAction {
             return;
         }
 
-        ContactsList foundContactsList = contactsService.searchByPhonePart(phoneToSearch);
-
+        List<Contact> foundContactsList = contactsService.searchByPhonePart(phoneToSearch);
         if (foundContactsList.size() != 0) {
             System.out.println("Найдены следующие контакты:");
-            for (int i = 0; i < foundContactsList.size(); i++) {
-                System.out.printf("%3d - %s, %s\n", i + 1, foundContactsList.get(i).getName(),
-                        foundContactsList.get(i).getPhone());
-            }
+            foundContactsList.stream().forEach(System.out::println);
         } else {
             System.out.println("Контакты не найдены.");
         }
         System.out.println("*********************************");
-
-
     }
 
     //------------------------------------------------------------------------------

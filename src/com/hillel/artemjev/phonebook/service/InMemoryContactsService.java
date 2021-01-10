@@ -1,19 +1,22 @@
 package com.hillel.artemjev.phonebook.service;
 
 import com.hillel.artemjev.phonebook.contacts.Contact;
-import com.hillel.artemjev.phonebook.contacts.ContactsList;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class InMemoryContactsService implements ContactsService {
 
-    private ContactsList contacts;
+    private List<Contact> contacts;
 
     public InMemoryContactsService() {
-        contacts = new ContactsList();
+        contacts = new ArrayList<>();
     }
 
     @Override
-    public ContactsList getAll() {
+    public List<Contact> getAll() {
         return contacts;
     }
 
@@ -28,25 +31,16 @@ public class InMemoryContactsService implements ContactsService {
     }
 
     @Override
-    public ContactsList searchByPhonePart(String phoneToSearch) {
-        ContactsList foundContactsList = new ContactsList();
-        for (int i = 0; i < contacts.size(); i++) {
-            if (contacts.get(i).getPhone().contains(phoneToSearch)) {
-                foundContactsList.add(contacts.get(i));
-            }
-        }
-        return foundContactsList;
+    public List<Contact> searchByPhonePart(String phoneToSearch) {
+        return contacts.stream()
+                .filter(contact -> contact.getPhone().contains(phoneToSearch))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public ContactsList searchByNameBeginning(String nameToSearch) {
-        ContactsList foundContactsList = new ContactsList();
-        for (int i = 0; i < contacts.size(); i++) {
-//          Поиск сделал регистронезависимым, поидее, с точки зрения юзабилити это правильно.
-            if (contacts.get(i).getName().toUpperCase().startsWith(nameToSearch.toUpperCase())) {
-                foundContactsList.add(contacts.get(i));
-            }
-        }
-        return foundContactsList;
+    public List<Contact> searchByNameBeginning(String nameToSearch) {
+        return contacts.stream()
+                .filter(contact -> contact.getName().toUpperCase().startsWith(nameToSearch.toUpperCase()))
+                .collect(Collectors.toList());
     }
 }
